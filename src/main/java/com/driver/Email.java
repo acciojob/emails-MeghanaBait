@@ -28,13 +28,42 @@ public class Email {
         // 4. It contains at least one digit
         // 5. It contains at least one special character. Any character apart from alphabets and digits is a special character
 
-        if(oldPassword.equals(this.password) && isValidPassword(newPassword)){
-            this.password = newPassword;
+        if(oldPassword.equals(this.password)){
+            if(isValidPassword(newPassword)){
+                this.password = newPassword;
+                System.out.println("Password changed successfully.");
+            }else{
+                System.out.println("The new Password is not valid.");
+            }
+        }else{
+            System.out.println("The provided password doesn't match with old password");
         }
     }
 
-    private boolean isValidPassword(String newPassword) {
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-        return Pattern.matches(regex, password);
+    private Boolean isValidPassword(String newPassword) {
+        Boolean capitalLetter = false;
+        Boolean smallLetter = false;
+        Boolean digit = false;
+        Boolean specialChar = false;
+
+        if(newPassword.length() < 8){
+            return false;
+        }
+        for (int i = 0; i < newPassword.length(); i++) {
+            char ch = newPassword.charAt(i);
+            if(ch >= 'A' && ch <= 'Z'){
+                capitalLetter = true;
+            }else if(ch >= 'a' && ch <= 'z'){
+                smallLetter = true;
+            }else if(ch >= '0' && ch <= '9'){
+                digit = true;
+            }else{
+                specialChar = true;
+            }
+        }
+        if(specialChar && smallLetter && capitalLetter && digit){
+            return true;
+        }
+        return false;
     }
 }
