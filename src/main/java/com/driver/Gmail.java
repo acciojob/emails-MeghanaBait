@@ -43,18 +43,12 @@ public class Gmail extends Email {
 //                break;
 //            }
 //        }
-
-        int index = -1;
-        for (int i = 0; i < inbox.size(); i++) {
-            if(message.equals(inbox.get(i))){
-                index = i;
+        for(Mail mail : inbox){
+            if(mail.getMessage().equals(message)){
+                inbox.remove(mail);
+                trash.add(mail);
                 break;
             }
-        }
-
-        if(index != -1){
-            trash.add(inbox.get(index));
-            inbox.remove(index);
         }
 
     }
